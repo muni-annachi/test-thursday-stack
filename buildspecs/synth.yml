@@ -1,0 +1,21 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm ci
+  pre_build:
+    commands:
+      - echo "Fetching environment config from Secrets Manager..."
+      - aws secretsmanager get-secret-value --secret-id test-thursday-stack-pipeline-environments --query SecretString --output text > environments.json
+      - echo "Environment config loaded"
+  build:
+    commands:
+      - npx aws-cdk synth
+
+artifacts:
+  base-directory: cdk.out
+  files:
+    - '**/*'

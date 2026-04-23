@@ -1,0 +1,23 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      nodejs: 20
+    commands:
+      - npm ci
+      - npm install -g aws-cdk
+  pre_build:
+    commands:
+      - echo "Fetching environment config from Secrets Manager..."
+      - aws secretsmanager get-secret-value --secret-id ${APP_NAME}-pipeline-environments --query SecretString --output text > environments.json
+      - echo "Environment config loaded"
+      - echo "Deploying ${APP_NAME} to ${DEPLOY_ENV} (account ${DEPLOY_ACCOUNT}, region ${DEPLOY_REGION})..."
+      - export CDK_DEFAULT_ACCOUNT=${DEPLOY_ACCOUNT}
+      - export CDK_DEFAULT_REGION=${DEPLOY_REGION}
+  build:
+    commands:
+      - echo "Deploying to ${DEPLOY_ENV} (account ${DEPLOY_ACCOUNT}, region ${DEPLOY_REGION})..."
+      - export CDK_DEFAULT_ACCOUNT=${DEPLOY_ACCOUNT}
+      - export CDK_DEFAULT_REGION=${DEPLOY_REGION}
+      - npx aws-cdk deploy --all --require-approval never

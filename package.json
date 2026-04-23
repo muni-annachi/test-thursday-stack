@@ -1,0 +1,17 @@
+{
+  "name": "test-thursday-stack",
+  "version": "1.0.0",
+  "bin": { "test-thursday-stack": "bin/test-thursday-stack.js" },
+  "scripts": { "build": "tsc", "cdk": "cdk" },
+  "devDependencies": {
+    "aws-cdk": "^2.250.0",
+    "typescript": "~5.8.0",
+    "@types/node": "^22.0.0",
+    "source-map-support": "^0.5.21",
+    "ts-node": "^10.9.0"
+  },
+  "dependencies": {
+    "aws-cdk-lib": "^2.250.0",
+    "constructs": "^10.5.0"
+  }
+}
