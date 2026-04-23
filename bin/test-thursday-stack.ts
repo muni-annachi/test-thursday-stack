@@ -7,8 +7,8 @@ const app = new cdk.App();
 
 new TestThursdayStackStack(app, 'test-thursday-stack', {
   env: {
-    account: process.env.CDK_DEFAULT_ACCOUNT,
-    region: process.env.CDK_DEFAULT_REGION || 'us-east-1',
+    account: process.env.DEPLOY_ACCOUNT || process.env.CDK_DEFAULT_ACCOUNT,
+    region: process.env.DEPLOY_REGION || process.env.CDK_DEFAULT_REGION || 'us-east-1',
   },
 });
 
